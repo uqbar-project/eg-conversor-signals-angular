@@ -1,0 +1,56 @@
+<div class="container">
+  <div class="title-container">
+    <h1 class="title" data-testid="titulo">Conversor <small>Angular con Signals</small></h1>
+  </div>
+
+  <form>
+    <div class="fieldset">
+      <div class="header">
+        <label for="millasInput">Millas:</label>
+        <input type="text" name="millasInput" value="0" [(ngModel)]="millasInput" [ngClass]="{'error': !validateInput()}">
+
+        <button (click)="set(+millasInput.replace(',','.'))" class="primary-button">Convertir</button>
+        <button (click)="resetear()" class="secondary-button">Resetear</button>
+      </div>
+
+      <div class="conversor-container">
+        <div class="millas-container unit-box">
+          <div class="unit-box-header">
+            <label>Millas</label>
+            <div [ngClass]="{'decimal-bg': isDecimal(), 'integer-bg': !isDecimal()}">{{isDecimal() ? 'Decimal' : 'Entero'}}</div>
+          </div>
+
+          <div class="unit-box-editable">
+            <button (click)="decrementar(0.1)">-</button>
+            <div class="unidad">{{millas() | number: '1.1-2':'es-ES'}}</div>
+            <button (click)="incrementar(0.1)">+</button>
+          </div>
+
+          <div class="separator"></div>
+        </div>
+
+        <p class="equal">
+          =
+        </p>
+
+        <div class="kilometros-container unit-box">
+          <div class="unit-box-header">
+            <label>Kilometros</label>
+          </div>
+
+          <div class="unit-box-editable">
+            <div class="unidad">{{kilometros() | number: '1.1-2':'es-ES'}}</div>
+          </div>
+
+          <div class="separator"></div>
+        </div>
+      </div>
+
+      <div class="save-button">
+        <button (click)="guardarConversion(millas(), kilometros())" class="primary-button">Guardar</button>
+      </div>
+    </div>
+  </form>
+
+  <app-historial [conversaciones]="listaConversiones"></app-historial>
+</div>
