@@ -1,6 +1,6 @@
 # Ejemplo Conversor - Signals Angular
 
-![Angular Signals Completo](https://github.com/nicovillamonte/eg-conversor-signals-angular/assets/64659720/5bc83628-8e8d-467a-bde8-c673a7336cd5) ![coverage-status](./badges/coverage.svg)
+![Angular Signals Completo](https://github.com/nicovillamonte/eg-conversor-signals-angular/assets/64659720/5bc83628-8e8d-467a-bde8-c673a7336cd5) ![coverage-status](./badges/eg-conversor-signals-angular/coverage.svg)
 
 En este ejemplo se muestra como crear un conversor de millas a kilometros utilizando el framework Angular en su version 16, en la que podemos aplicar los `signals`.
 
