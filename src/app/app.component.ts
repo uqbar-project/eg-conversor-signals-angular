@@ -1,10 +1,18 @@
-import { Component, signal, computed, effect } from '@angular/core'
+import { NumberSymbol, getLocaleNumberSymbol } from '@angular/common'
+import {
+  Component,
+  signal,
+  computed,
+  effect,
+  Inject,
+  LOCALE_ID
+} from '@angular/core'
 import { Conversion } from 'src/DTO/conversion'
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss'],
+  styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
   title = 'eg-conversor-signals-angular'
@@ -20,7 +28,7 @@ export class AppComponent {
   // Lista de conversiones guardadas
   listaConversiones = signal<Conversion[]>([])
 
-  constructor() {
+  constructor(@Inject(LOCALE_ID) public locale: string) {
     effect(() => {
       // Veremos cómo esto se llama solamente cuando cambia el valor de isDecimal
       console.log(this.isDecimal() ? 'Es Decimal' : 'Es Entero')
@@ -49,19 +57,23 @@ export class AppComponent {
   }
 
   guardarConversion(millas: number, kilometros: number) {
-    this.listaConversiones.mutate((lista) =>
-      lista.push({ millas, kilometros })
-    )
+    this.listaConversiones.mutate((lista) => lista.push({ millas, kilometros }))
   }
 
   resetear() {
-    this.set(0) 
+    this.set(0)
     this.millasInput = '0'
   }
 
   // --- Validaciones
   validateInput(): boolean {
-    const value = this.millasInput.replace(',', '.')
-    return value == '' || !isNaN(Number(value))
+    const decimalSymbol = getLocaleNumberSymbol(
+      this.locale,
+      NumberSymbol.Decimal
+    )
+
+    const sanitizedValue = this.millasInput.replace(decimalSymbol, '.')
+
+    return sanitizedValue == '' || !isNaN(Number(sanitizedValue))
   }
 }
