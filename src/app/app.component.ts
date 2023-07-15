@@ -19,7 +19,7 @@ export class AppComponent {
   millasInput: string = ''
 
   // Parámetros de conversión
-  millas = signal(0)
+  millas = signal(1)
   kilometros = computed(() => this.millas() * 1.60934)
 
   // Parámetros de referencia

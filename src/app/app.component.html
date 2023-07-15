@@ -7,9 +7,9 @@
     <div class="fieldset">
       <div class="header">
         <label for="millasInput">Millas:</label>
-        <input type="text" name="millasInput" value="0" [(ngModel)]="millasInput" [ngClass]="{'error': !validateInput()}">
+        <input data-testid="miles-input" type="text" name="millasInput" value="0" [(ngModel)]="millasInput" [ngClass]="{'error': !validateInput()}">
 
-        <button (click)="set(+millasInput.replace(',','.'))" class="primary-button">Convertir</button>
+        <button (click)="set(+millasInput.replace(',','.'))" class="primary-button" data-testid="convert-button">Convertir</button>
         <button (click)="resetear()" class="secondary-button">Resetear</button>
       </div>
 
@@ -22,7 +22,7 @@
 
           <div class="unit-box-editable">
             <button (click)="decrementar(0.1)">-</button>
-            <div class="unidad">{{millas() | number: '1.1-2':locale}}</div>
+            <div class="unidad" data-testid="miles-number">{{millas() | number: '1.1-2':locale}}</div>
             <button (click)="incrementar(0.1)">+</button>
           </div>
 
@@ -39,7 +39,7 @@
           </div>
 
           <div class="unit-box-editable">
-            <div class="unidad">{{kilometros() | number: '1.1-2':locale}}</div>
+            <div class="unidad" data-testid="kilometers-number">{{kilometros() | number: '1.1-2':locale}}</div>
           </div>
 
           <div class="separator"></div>
