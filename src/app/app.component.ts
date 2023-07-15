@@ -43,7 +43,8 @@ export class AppComponent {
     })
   }
 
-  set(millas: number) {
+  set() {
+    const millas = this.localeToNumber(this.millasInput)
     if (!this.validateInput()) throw new Error('Valor no válido')
     this.millas.set(millas)
   }
@@ -61,19 +62,21 @@ export class AppComponent {
   }
 
   resetear() {
-    this.set(0)
+    this.millas.set(0)
     this.millasInput = '0'
   }
 
   // --- Validaciones
   validateInput(): boolean {
+    return !isNaN(this.localeToNumber(this.millasInput))
+  }
+
+  localeToNumber(value: string): number {
     const decimalSymbol = getLocaleNumberSymbol(
       this.locale,
       NumberSymbol.Decimal
     )
 
-    const sanitizedValue = this.millasInput.replace(decimalSymbol, '.')
-
-    return sanitizedValue == '' || !isNaN(Number(sanitizedValue))
+    return +value.replace(decimalSymbol, '.')
   }
 }
