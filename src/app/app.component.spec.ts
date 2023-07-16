@@ -51,35 +51,31 @@ describe('AppComponent', () => {
     ).toContain('Conversor Angular con Signals')
   })
 
-  // it('should have correct initial values', () => {
-  //   fixture.detectChanges()
-  //   const milesNumber = getByTestId('miles-number')
-  //   const miles = localeToNumber(milesNumber.textContent)
+  it('should have correct initial values', () => {
+    fixture.detectChanges()
+    const milesNumber = getByTestId('miles-number')
+    const miles = localeToNumber(milesNumber.textContent)
 
-  //   expect(miles).toEqual(0)
-  // })
+    expect(miles).toEqual(0)
+  })
 
   it('should change the value of miles, kilometers and if it is decimal or not when submit another miles value', async () => {
-    console.log(app.millas())
-
-    fixture.detectChanges()
-
-    const milesInput = getByTestId('miles-input')
     const conversorButton = getByTestId('convert-button')
 
-    console.log('MILES INPUT', milesInput.value)
-    milesInput.value = '10'
-    milesInput.dispatchEvent(new Event('input', { bubbles: true }))
-    conversorButton.click() // Not updating the signal value
-
-    // app.millas.set(10)
-    console.log(app.millas())
+    app.millasInput = '10'
+    conversorButton.click()
 
     fixture.detectChanges()
 
-    const milesNumber = localeToNumber(getByTestId('miles-number').textContent)
+    const miles = localeToNumber(getByTestId('miles-number').textContent)
+    const kilometers = localeToNumber(
+      getByTestId('kilometers-number').textContent
+    )
+    const numberType = getByTestId('number-type').textContent
 
-    expect(milesNumber).toEqual(10)
+    expect(miles).toEqual(10)
+    expect(numberType).toEqual('Entero')
+    expect(kilometers).toEqual(16.09)
   })
 
   // ------------------ Helpers ------------------

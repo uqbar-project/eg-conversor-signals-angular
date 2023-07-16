@@ -17,7 +17,7 @@
         <div class="millas-container unit-box">
           <div class="unit-box-header">
             <label>Millas</label>
-            <div [ngClass]="{'decimal-bg': isDecimal(), 'integer-bg': !isDecimal()}">{{isDecimal() ? 'Decimal' : 'Entero'}}</div>
+            <div data-testid="number-type" [ngClass]="{'decimal-bg': isDecimal(), 'integer-bg': !isDecimal()}">{{isDecimal() ? 'Decimal' : 'Entero'}}</div>
           </div>
 
           <div class="unit-box-editable">
