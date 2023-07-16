@@ -16,6 +16,7 @@ import { Conversion } from 'src/DTO/conversion'
 })
 export class AppComponent {
   title = 'eg-conversor-signals-angular'
+  stepSize = 0.1
   millasInput: string = ''
 
   // Parámetros de conversión
@@ -49,12 +50,12 @@ export class AppComponent {
     this.millas.set(millas)
   }
 
-  incrementar(pasos: number = 1) {
-    this.millas.update((millas) => millas + pasos)
+  incrementar() {
+    this.millas.update((millas) => millas + this.stepSize)
   }
 
-  decrementar(pasos: number = 1) {
-    this.millas.update((millas) => millas - pasos)
+  decrementar() {
+    this.millas.update((millas) => millas - this.stepSize)
   }
 
   guardarConversion(millas: number, kilometros: number) {
@@ -63,7 +64,7 @@ export class AppComponent {
 
   resetear() {
     this.millas.set(0)
-    this.millasInput = '0'
+    this.millasInput = ''
   }
 
   // --- Validaciones
