@@ -9,7 +9,7 @@
         <label for="millasInput">Millas:</label>
         <input data-testid="miles-input" type="text" name="millasInput" value="0" [(ngModel)]="millasInput" [ngClass]="{'error': !validateInput()}">
 
-        <button (click)="set(+millasInput.replace(',','.'))" class="primary-button" data-testid="convert-button">Convertir</button>
+        <button (click)="set()" class="primary-button" data-testid="convert-button">Convertir</button>
         <button (click)="resetear()" class="secondary-button">Resetear</button>
       </div>
 
