@@ -23,6 +23,11 @@ export class TestingHelper<T> {
     return resultHtml.querySelector(`[data-testid="${testId}"]`)
   }
 
+  getAllByTestId(testId: string) {
+    const resultHtml = this.fixture.debugElement.nativeElement
+    return resultHtml.querySelectorAll(`[data-testid="${testId}"]`)
+  }
+
   localeToNumber(value: string): number {
     return +value.replace(this.decimalSymbol, '.')
   }

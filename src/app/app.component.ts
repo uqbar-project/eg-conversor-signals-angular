@@ -58,8 +58,11 @@ export class AppComponent {
     this.millas.update((millas) => millas - this.stepSize)
   }
 
+  idCounter = 0
   guardarConversion(millas: number, kilometros: number) {
-    this.listaConversiones.mutate((lista) => lista.push({ millas, kilometros }))
+    this.listaConversiones.mutate((lista) =>
+      lista.push({ id: this.idCounter++, millas, kilometros })
+    )
   }
 
   resetear() {

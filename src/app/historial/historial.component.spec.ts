@@ -25,15 +25,54 @@ describe('HistorialComponent', () => {
   })
 
   it('Inicialmente no deberia haber ninguna conversion guardada', () => {
-    const rows = fixture.nativeElement.querySelectorAll('tr')
+    const rows = test.getAllByTestId('table-row')
     expect(rows.length).toEqual(0)
   })
 
-  it('Al clickear en el boton guardar se deberia reflejar en la lista', () => {
-    // Reto: Obtener el boton de guardar del componente app o testear en el componente app esto obteniendo la tabla de este componente
+  it('Al obtener valores en la lista de conversiones se deberian reflejar en la lista', () => {
+    // Simulamos listas guardadas con anterioridad
+    // (al ser test unitario no podemos interactuar con otros componentes y el boton para guardar esta en el componente padre)
+    component.listaConversiones.set([
+      {
+        kilometros: 1,
+        millas: 1.61
+      },
+      {
+        kilometros: 2,
+        millas: 3.22
+      }
+    ])
+
+    fixture.detectChanges()
+
+    const rows = test.getAllByTestId('table-row')
+    expect(rows.length).toEqual(2)
   })
 
-  it('Se borra un elemento de la lista', () => {
-    // Reto: Obtener el boton de borrar del elemento especifico que se quiere borrar.
+  it('Se borra un elemento de la lista correctamente', () => {
+    component.listaConversiones.set([
+      {
+        id: 1,
+        kilometros: 1,
+        millas: 1.61
+      },
+      {
+        id: 2,
+        kilometros: 2,
+        millas: 3.22
+      }
+    ])
+
+    fixture.detectChanges()
+
+    test.getByTestId('delete-button-1').click()
+
+    let rows = test.getAllByTestId('table-row')
+    expect(rows.length).toEqual(2)
+
+    fixture.detectChanges()
+
+    rows = test.getAllByTestId('table-row')
+    expect(rows.length).toEqual(1)
   })
 })

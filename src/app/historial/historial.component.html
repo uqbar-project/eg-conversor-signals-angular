@@ -12,11 +12,13 @@
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let conversacion of listaConversiones(); let i = index">
-        <td>{{conversacion.millas | number: '1.1-2':'es-ES'}}</td>
-        <td>{{conversacion.kilometros | number: '1.1-2':'es-ES'}}</td>
+      <tr *ngFor="let conversion of listaConversiones()" data-testid="table-row">
+        <td>{{conversion.millas | number: '1.1-2':'es-ES'}}</td>
+        <td>{{conversion.kilometros | number: '1.1-2':'es-ES'}}</td>
         <td class="action-column">
-          <span class="material-symbols-outlined delete" (click)="delete(i)">
+          <span class="material-symbols-outlined delete"
+                (click)="delete(conversion.id!!)"
+                [attr.data-testid]="'delete-button-' + conversion.id">
             delete
           </span>
         </td>
