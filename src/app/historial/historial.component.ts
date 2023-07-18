@@ -7,7 +7,7 @@ import { Conversion } from 'src/DTO/conversion'
   styleUrls: ['./historial.component.scss']
 })
 export class HistorialComponent {
-  @Input('conversaciones') conversiones = signal<Conversion[]>([])
+  @Input('conversiones') conversiones = signal<Conversion[]>([])
 
   borrarConversion(id: number) {
     const indice = this.conversiones().findIndex(

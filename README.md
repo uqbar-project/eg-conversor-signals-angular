@@ -133,7 +133,7 @@ Otro caso interesante es la comunicacion entre componentes padre e hijo. Si obte
 Componente hijo:
 ``` typescript
 export class ComponenteHijo {
-  @Input('conversaciones') conversiones = signal<Conversion[]>([]);
+  @Input('conversiones') conversiones = signal<Conversion[]>([]);
 
   borrarConversion(index: number) {
     this.conversiones.mutate((lista) => lista.splice(index, 1));
@@ -161,7 +161,7 @@ export class ComponentePadre {
 
 HTML del componente padre:
 ``` html
-  <app-componente-hijo [conversaciones]="conversiones"></app-componente-hijo>
+  <app-componente-hijo [conversiones]="conversiones"></app-componente-hijo>
 ```
 
 En este caso, cuando se borre un item del signal pasado al componente hijo en el mismo, se va a emitir un cambio en el signal y se va a actualizar el valor en el componente padre. Por lo que se va a llamar al effect y podra ver en la consola del navegador. 
