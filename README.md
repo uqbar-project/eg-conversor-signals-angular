@@ -44,7 +44,7 @@ Por ejemplo, podemos utilizarlo en el HTML de la siguiente forma:
 Desde aqui vamos a poder manejarlo de la misma manera que haciamos con otros parametros de los componentes. Por ejemplo aplicandoles pipes.
 
 ``` html
-<div class="unidad">{{millas() | number: '1.1-2':'es-ES'}}</div>
+<div class="unidad">{{millas() | number: '1.1-2':locale}}</div>
 ```
 
 ## Emitir un signal (Producers)
@@ -64,7 +64,7 @@ millas.set(53);
 Para actualizar un valor _x_ en el signal, debemos llamar a la funcion `update` del mismo y pasarle como parametro una funcion que recibe como parametro el valor actual del signal y retorna el nuevo valor.
 
 ``` typescript
-millas.update((x) => x + 1);
+millas.update((millas) => millas + 1);
 ```
 
 ### Mutate
@@ -72,10 +72,10 @@ millas.update((x) => x + 1);
 En el caso de que el valor del signal sea un objeto o un array, es decir, estados mutables, podemos utilizar la funcion `mutate` para modificar el valor interno del mismo.
 
 ``` typescript
-listaConversiones = signal<Conversion[]>([]);
+conversiones = signal<Conversion[]>([]);
 
-this.listaConversiones.mutate((lista) =>
-  lista.push({ millas, kilometros })
+this.conversiones.mutate((conversiones) =>
+  conversiones.push({ millas, kilometros })
 );
 ```
 
@@ -115,17 +115,17 @@ En este caso cada vez que se cambien las millas se realizara un `console.log` co
 Con esto podemos probar lo que deciamos del computed anteriormente. Vamos a hacer un computed signal que nos emita una señal cuando las millas cambien de decimal a entero y viceversa.
 
 ``` typescript
-isDecimal = computed(() => Number(this.millas().toFixed(2)) % 1 !== 0);
+esDecimal = computed(() => Number(this.millas().toFixed(2)) % 1 !== 0);
 
 constructor() {
   effect(() => {
-    // Veremos como esto se llama solamente cuando cambia el valor de isDecimal
-    console.log(this.isDecimal() ? 'Es Decimal' : 'Es Entero');
+    // Veremos como esto se llama solamente cuando cambia el valor de esDecimal
+    console.log(this.esDecimal() ? 'Es Decimal' : 'Es Entero');
   });
 }
 ```
 
-Ese console.log se va a ejecutar solamente cuando cambie el valor de isDecimal, es decir, cuando las millas cambien de decimal a entero o viceversa.
+Ese console.log se va a ejecutar solamente cuando cambie el valor de esDecimal, es decir, cuando las millas cambien de decimal a entero o viceversa.
 
 <br>
 Otro caso interesante es la comunicacion entre componentes padre e hijo. Si obtenemos el valor del signal en el componente hijo y lo modificamos desde ahi, entonces se va a emitir el cambio en el signal y se va a actualizar el valor en el componente padre.
@@ -133,10 +133,10 @@ Otro caso interesante es la comunicacion entre componentes padre e hijo. Si obte
 Componente hijo:
 ``` typescript
 export class ComponenteHijo {
-  @Input('conversaciones') listaConversiones = signal<Conversion[]>([]);
+  @Input('conversaciones') conversiones = signal<Conversion[]>([]);
 
-  delete(index: number) {
-    this.listaConversiones.mutate((lista) => lista.splice(index, 1));
+  borrarConversion(index: number) {
+    this.conversiones.mutate((lista) => lista.splice(index, 1));
   }
 }
 ```
@@ -145,14 +145,14 @@ Componente padre:
 ``` typescript
 export class ComponentePadre {
   // Lista de conversiones guardadas
-  listaConversiones = signal<Conversion[]>([]);
+  conversiones = signal<Conversion[]>([]);
 
   constructor() {
     effect(() => {
-      // Este effect se va a ejecutar tanto desde los cambios de listaConversiones en este componente como en el componente hijo
+      // Este effect se va a ejecutar tanto desde los cambios de conversiones en este componente como en el componente hijo
       console.log(
         'Se hizo un cambio en lista conversiones',
-        this.listaConversiones()
+        this.conversiones()
       );
     });
   }
@@ -161,7 +161,7 @@ export class ComponentePadre {
 
 HTML del componente padre:
 ``` html
-  <app-componente-hijo [conversaciones]="listaConversiones"></app-componente-hijo>
+  <app-componente-hijo [conversaciones]="conversiones"></app-componente-hijo>
 ```
 
 En este caso, cuando se borre un item del signal pasado al componente hijo en el mismo, se va a emitir un cambio en el signal y se va a actualizar el valor en el componente padre. Por lo que se va a llamar al effect y podra ver en la consola del navegador. 

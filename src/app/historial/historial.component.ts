@@ -7,10 +7,12 @@ import { Conversion } from 'src/DTO/conversion'
   styleUrls: ['./historial.component.scss']
 })
 export class HistorialComponent {
-  @Input('conversaciones') listaConversiones = signal<Conversion[]>([])
+  @Input('conversaciones') conversiones = signal<Conversion[]>([])
 
-  delete(id: number) {
-    const index = this.listaConversiones().findIndex((c) => c.id === id)
-    this.listaConversiones.mutate((lista) => lista.splice(index, 1))
+  borrarConversion(id: number) {
+    const indice = this.conversiones().findIndex(
+      (conversion) => conversion.id === id
+    )
+    this.conversiones.mutate((conversion) => conversion.splice(indice, 1))
   }
 }

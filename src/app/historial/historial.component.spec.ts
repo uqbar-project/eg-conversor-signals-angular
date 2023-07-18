@@ -20,19 +20,18 @@ describe('HistorialComponent', () => {
     test = TestingHelper.createHelper(fixture, 'es')
   })
 
-  it('should create', () => {
+  it('Crea el componente correctamente', () => {
     expect(component).toBeTruthy()
   })
 
   it('Inicialmente no deberia haber ninguna conversion guardada', () => {
-    const rows = test.getAllByTestId('table-row')
-    expect(rows.length).toEqual(0)
+    expect(cantidadFilas()).toEqual(0)
   })
 
   it('Al obtener valores en la lista de conversiones se deberian reflejar en la lista', () => {
     // Simulamos listas guardadas con anterioridad
     // (al ser test unitario no podemos interactuar con otros componentes y el boton para guardar esta en el componente padre)
-    component.listaConversiones.set([
+    component.conversiones.set([
       {
         kilometros: 1,
         millas: 1.61
@@ -45,12 +44,11 @@ describe('HistorialComponent', () => {
 
     fixture.detectChanges()
 
-    const rows = test.getAllByTestId('table-row')
-    expect(rows.length).toEqual(2)
+    expect(cantidadFilas()).toEqual(2)
   })
 
   it('Se borra un elemento de la lista correctamente', () => {
-    component.listaConversiones.set([
+    component.conversiones.set([
       {
         id: 1,
         kilometros: 1,
@@ -65,14 +63,14 @@ describe('HistorialComponent', () => {
 
     fixture.detectChanges()
 
-    test.getByTestId('delete-button-1').click()
+    test.getByTestId('boton-borrar-1').click()
 
-    let rows = test.getAllByTestId('table-row')
-    expect(rows.length).toEqual(2)
-
+    expect(cantidadFilas()).toEqual(2)
     fixture.detectChanges()
-
-    rows = test.getAllByTestId('table-row')
-    expect(rows.length).toEqual(1)
+    expect(cantidadFilas()).toEqual(1)
   })
+
+  function cantidadFilas() {
+    return test.getAllByTestId('fila').length
+  }
 })

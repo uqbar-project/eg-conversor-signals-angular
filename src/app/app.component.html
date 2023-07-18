@@ -7,23 +7,23 @@
     <div class="fieldset">
       <div class="header">
         <label for="millasInput">Millas:</label>
-        <input data-testid="miles-input" type="text" name="millasInput" value="0" [(ngModel)]="millasInput" [ngClass]="{'error': !validateInput()}">
+        <input type="text" name="millasInput" value="0" [(ngModel)]="millasInput" [ngClass]="{'error': !validarInput()}">
 
-        <button (click)="set()" class="primary-button" data-testid="convert-button">Convertir</button>
-        <button data-testid="reset-button" (click)="resetear()" class="secondary-button">Resetear</button>
+        <button (click)="set()" class="primary-button" data-testid="boton-convertir">Convertir</button>
+        <button data-testid="boton-reset" (click)="resetear()" class="secondary-button">Resetear</button>
       </div>
 
       <div class="conversor-container">
         <div class="millas-container unit-box">
           <div class="unit-box-header">
             <label>Millas</label>
-            <div data-testid="number-type" [ngClass]="{'decimal-bg': isDecimal(), 'integer-bg': !isDecimal()}">{{isDecimal() ? 'Decimal' : 'Entero'}}</div>
+            <div data-testid="tipo-numero" [ngClass]="{'decimal-bg': esDecimal(), 'integer-bg': !esDecimal()}">{{esDecimal() ? 'Decimal' : 'Entero'}}</div>
           </div>
 
           <div class="unit-box-editable">
-            <button data-testid="decrement-button" (click)="decrementar()">-</button>
-            <div class="unidad" data-testid="miles-number">{{millas() | number: '1.1-2':locale}}</div>
-            <button data-testid="increment-button" (click)="incrementar()">+</button>
+            <button data-testid="boton-decrementar" (click)="decrementar()">-</button>
+            <div class="unidad" data-testid="numero-millas">{{millas() | number: '1.1-2':locale}}</div>
+            <button data-testid="boton-incrementar" (click)="incrementar()">+</button>
           </div>
 
           <div class="separator"></div>
@@ -39,7 +39,7 @@
           </div>
 
           <div class="unit-box-editable">
-            <div class="unidad" data-testid="kilometers-number">{{kilometros() | number: '1.1-2':locale}}</div>
+            <div class="unidad" data-testid="numero-kilometros">{{kilometros() | number: '1.1-2':locale}}</div>
           </div>
 
           <div class="separator"></div>
@@ -47,10 +47,10 @@
       </div>
 
       <div class="save-button">
-        <button data-testid="save-button" (click)="guardarConversion(millas(), kilometros())" class="primary-button">Guardar</button>
+        <button (click)="guardarConversion(millas(), kilometros())" class="primary-button">Guardar</button>
       </div>
     </div>
   </form>
 
-  <app-historial [conversaciones]="listaConversiones"></app-historial>
+  <app-historial [conversaciones]="conversiones"></app-historial>
 </div>

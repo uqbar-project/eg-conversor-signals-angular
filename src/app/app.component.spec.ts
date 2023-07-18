@@ -35,15 +35,15 @@ describe('AppComponent', () => {
     test = TestingHelper.createHelper(fixture, 'es')
   })
 
-  it('should create the app', () => {
+  it('Levanta correctamente', () => {
     expect(app).toBeTruthy()
   })
 
-  it(`should have as title 'eg-conversor-signals-angular'`, () => {
+  it(`Tiene el titulo 'eg-conversor-signals-angular'`, () => {
     expect(app.title).toEqual('eg-conversor-signals-angular')
   })
 
-  it('should render title', () => {
+  it('Renderiza el titulo', () => {
     fixture.detectChanges()
     const compiled = fixture.nativeElement as HTMLElement
     expect(
@@ -54,89 +54,88 @@ describe('AppComponent', () => {
   it('Deberia tener valores iniciales correctos', () => {
     fixture.detectChanges()
 
-    const miles = test.localeToNumberByTestId('miles-number')
+    const millas = test.localeToNumberByTestId('numero-millas')
 
-    expect(miles).toEqual(0)
+    expect(millas).toEqual(0)
   })
 
   it('Deberia cambiar el valor de millas, kilometros y si es dcimal o entero cuando se quiere convertir', async () => {
-    const conversorButton = test.getByTestId('convert-button')
+    const botonConvertir = test.getByTestId('boton-convertir')
 
     app.millasInput = '10'
-    conversorButton.click()
+    botonConvertir.click()
 
     fixture.detectChanges()
 
-    const miles = test.localeToNumberByTestId('miles-number')
-    const kilometers = test.localeToNumberByTestId('kilometers-number')
-    const numberType = test.getByTestId('number-type').textContent
+    const millas = test.localeToNumberByTestId('numero-millas')
+    const kilometros = test.localeToNumberByTestId('numero-kilometros')
+    const tipoDeNumero = test.getByTestId('tipo-numero').textContent
 
-    expect(miles).toEqual(10)
-    expect(numberType).toEqual('Entero')
-    expect(kilometers).toEqual(16.09)
+    expect(millas).toEqual(10)
+    expect(tipoDeNumero).toEqual('Entero')
+    expect(kilometros).toEqual(16.09)
   })
 
   it('Deberia obtenerse un valor decimal cuando se ingresa un numero con coma', () => {
-    const conversorButton = test.getByTestId('convert-button')
+    const botonConvertir = test.getByTestId('boton-convertir')
 
     app.millasInput = '10' + test.decimalSymbol + '5' // 10,5 en es-ES
-    conversorButton.click()
+    botonConvertir.click()
 
     fixture.detectChanges()
 
-    const numberType = test.getByTestId('number-type').textContent
-    expect(numberType).toEqual('Decimal')
+    const tipoDeNumero = test.getByTestId('tipo-numero').textContent
+    expect(tipoDeNumero).toEqual('Decimal')
   })
 
   it('Se incrementa el valor de millas con el boton + en un valor fijo', () => {
-    const incrementButton = test.getByTestId('increment-button')
+    const botonIncrementar = test.getByTestId('boton-incrementar')
 
     app.millas.set(10)
-    incrementButton.click()
+    botonIncrementar.click()
 
     fixture.detectChanges()
 
-    const miles = test.localeToNumberByTestId('miles-number')
+    const millas = test.localeToNumberByTestId('numero-millas')
 
-    expect(miles).toEqual(10 + app.stepSize)
+    expect(millas).toEqual(10 + app.tamanioDePasos)
   })
 
   it('Se decrementa tres veces el valor de millas con el boton - en un valor fijo', () => {
-    const decrementButton = test.getByTestId('decrement-button')
+    const botonDecrementar = test.getByTestId('boton-decrementar')
 
     app.millas.set(10)
-    decrementButton.click()
-    decrementButton.click()
-    decrementButton.click()
+    botonDecrementar.click()
+    botonDecrementar.click()
+    botonDecrementar.click()
 
     fixture.detectChanges()
 
-    // const miles = localeToNumber(getByTestId('miles-number').textContent)
-    const miles = test.localeToNumberByTestId('miles-number')
+    const millas = test.localeToNumberByTestId('numero-millas')
 
-    expect(miles).toEqual(10 - app.stepSize * 3)
+    expect(millas).toEqual(10 - app.tamanioDePasos * 3)
   })
 
   it('Se resetean los valores de millas y kilometros cuando se hace click en el boton reset', () => {
-    const resetButton = test.getByTestId('reset-button')
+    const botonReset = test.getByTestId('boton-reset')
 
     // Se setea un valor inicial
     app.millas.set(10)
     fixture.detectChanges()
 
     // Se hace click en el boton reset
-    resetButton.click()
-    let miles = test.localeToNumberByTestId('miles-number')
-    expect(miles).toEqual(10) // Test previo al click
+    botonReset.click()
+    let millas = test.localeToNumberByTestId('numero-millas')
+    expect(millas).toEqual(10) // Test previo al click
 
     fixture.detectChanges()
 
-    miles = test.localeToNumberByTestId('miles-number')
-    const kilometers = test.localeToNumber(
-      test.getByTestId('kilometers-number').textContent
+    millas = test.localeToNumberByTestId('numero-millas')
+    const kilometros = test.localeToNumber(
+      test.getByTestId('numero-kilometros').textContent
     )
 
-    expect(miles).toEqual(0)
-    expect(kilometers).toEqual(0)
+    expect(millas).toEqual(0)
+    expect(kilometros).toEqual(0)
   })
 })
