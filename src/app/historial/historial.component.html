@@ -1,8 +1,8 @@
-<div *ngIf="listaConversiones().length == 0">
+<div *ngIf="conversiones().length == 0">
   <p>No hay conversiones guardadas aun </p>
 </div>
 
-<div *ngIf="listaConversiones().length != 0">
+<div *ngIf="conversiones().length != 0">
   <table class="table">
     <thead>
       <tr>
@@ -12,11 +12,13 @@
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let conversacion of listaConversiones(); let i = index">
-        <td>{{conversacion.millas | number: '1.1-2':'es-ES'}}</td>
-        <td>{{conversacion.kilometros | number: '1.1-2':'es-ES'}}</td>
+      <tr *ngFor="let conversion of conversiones()" data-testid="fila">
+        <td>{{conversion.millas | number: '1.1-2':'es-ES'}}</td>
+        <td>{{conversion.kilometros | number: '1.1-2':'es-ES'}}</td>
         <td class="action-column">
-          <span class="material-symbols-outlined delete" (click)="delete(i)">
+          <span class="material-symbols-outlined delete"
+                (click)="borrarConversion(conversion.id!!)"
+                [attr.data-testid]="'boton-borrar-' + conversion.id">
             delete
           </span>
         </td>
