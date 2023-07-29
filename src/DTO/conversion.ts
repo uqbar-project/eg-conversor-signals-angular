@@ -1,4 +1,5 @@
 export interface Conversion {
-  millas: number;
-  kilometros: number;
+  id?: number
+  millas: number
+  kilometros: number
 }
